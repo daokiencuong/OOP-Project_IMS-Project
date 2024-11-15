@@ -17,7 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByProductNameContaining(String name);
 
-//    @EntityGraph(attributePaths = {"suppliers"})
     @Query("""
     SELECT p, s.supplierID, s.name\s
     FROM Product p

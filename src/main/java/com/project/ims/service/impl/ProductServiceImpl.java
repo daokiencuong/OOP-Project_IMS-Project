@@ -62,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
             productMap.put("supplierName", supplierName);
             result.add(productMap);
         }
-
         return new PageImpl<>(result, pageable, resultPage.getTotalElements());
     }
 
