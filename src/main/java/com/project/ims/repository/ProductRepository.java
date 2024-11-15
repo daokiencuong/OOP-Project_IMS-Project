@@ -19,10 +19,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 //    @EntityGraph(attributePaths = {"suppliers"})
     @Query("""
-    SELECT p, s.supplierID, s.name 
+    SELECT p, s.supplierID, s.name\s
     FROM Product p
-    JOIN p.suppliers s
-    """)
+    LEFT JOIN p.suppliers s
+   \s""")
     Page<Object[]> getAll(Pageable pageable);
 
     @Query("SELECT p.productID FROM Product p WHERE p.productID = :productId")

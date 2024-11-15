@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = (Product) row[0];
             Integer supplierID = (Integer) row[1];
             String supplierName = (String) row[2];
-            Map<String, Object> productMap = new TreeMap<>();
+            Map<String, Object> productMap = new HashMap<>();
             productMap.put("ProductID", product.getProductID());
             productMap.put("ProductName", product.getProductName());
             productMap.put("category", product.getCategory());
@@ -62,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
             productMap.put("supplierName", supplierName);
             result.add(productMap);
         }
+
         return new PageImpl<>(result, pageable, resultPage.getTotalElements());
     }
 
