@@ -9,7 +9,8 @@ CREATE TABLE Supplier (
 );
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -41,6 +42,6 @@ public class Supplier {
             joinColumns = @JoinColumn(name = "supplierID"),
             inverseJoinColumns = @JoinColumn(name = "productID")
     )
-    @JsonIgnore
+    @JsonBackReference
     private List<Product> products;
 }

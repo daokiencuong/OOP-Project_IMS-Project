@@ -4,16 +4,13 @@ import com.project.ims.model.dto.ProductDTO;
 import com.project.ims.model.entity.Product;
 import com.project.ims.repository.ProductRepository;
 import com.project.ims.service.ProductService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -47,8 +44,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findAll(Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public Page<Map<String, Object>> findAll(Pageable pageable) {
+        Page<Object[]> resultPage = productRepository.getAll(pageable);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Object[] row : resultPage.getContent()) {
+            Product product = (Product) row[0];
+            Integer supplierID = (Integer) row[1];
+            String supplierName = (String) row[2];
+            Map<String, Object> productMap = new TreeMap<>();
+            productMap.put("ProductID", product.getProductID());
+            productMap.put("ProductName", product.getProductName());
+            productMap.put("category", product.getCategory());
+            productMap.put("price", product.getPrice());
+            productMap.put("unitCal", product.getUnitCal());
+            productMap.put("quantity", product.getQuantity());
+            productMap.put("supplierID", supplierID);
+            productMap.put("supplierName", supplierName);
+            result.add(productMap);
+        }
+        return new PageImpl<>(result, pageable, resultPage.getTotalElements());
     }
 
     @Override
