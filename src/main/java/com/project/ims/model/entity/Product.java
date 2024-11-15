@@ -1,6 +1,7 @@
 package com.project.ims.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -59,5 +60,6 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     @ToString.Exclude
+    @JsonIgnore
     private List<Supplier> suppliers;
 }
